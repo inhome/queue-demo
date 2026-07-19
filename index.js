@@ -12,4 +12,10 @@ function chunks(values, size) {
   return result;
 }
 
-module.exports = { createQueue: createQueue, chunks: chunks };
+async function mapBatches(values, size, operation) {
+  const result = [];
+  for (const batch of chunks(values, size)) result.push(...await Promise.all(batch.map(operation)));
+  return result;
+}
+
+module.exports = { createQueue: createQueue, chunks: chunks, mapBatches: mapBatches };
