@@ -18,4 +18,9 @@ async function mapBatches(values, size, operation) {
   return result;
 }
 
-module.exports = { createQueue: createQueue, chunks: chunks, mapBatches: mapBatches };
+function deduplicateJobs(jobs) {
+  const seen = new Set();
+  return jobs.filter(function (job) { if (seen.has(job.id)) return false; seen.add(job.id); return true; });
+}
+
+module.exports = { createQueue: createQueue, chunks: chunks, mapBatches: mapBatches, deduplicateJobs: deduplicateJobs };

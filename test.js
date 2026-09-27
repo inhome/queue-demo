@@ -16,3 +16,5 @@ async function checkBatches() {
 }
 checkBatches().catch(function (error) { console.error(error); process.exitCode = 1; });
 
+assert.deepStrictEqual(lib.deduplicateJobs([{ id: "a" }, { id: "a" }, { id: "b" }]).map(function (job) { return job.id; }), ["a", "b"]);
+
